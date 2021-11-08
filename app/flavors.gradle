@@ -1,0 +1,25 @@
+ext.flavorConfig = {
+    flavorDimensions "environment"
+    productFlavors {
+        free {
+            dimension "environment"
+            ext.customApplicationIdSuffix = ".free"
+            ext.customVersionNameSuffix = "-free"
+        }
+        pay {
+        }
+    }
+
+    productFlavors.all { flavor ->
+        if (flavor.hasProperty('customApplicationIdSuffix') && isApplicationProject()) {
+            flavor.applicationIdSuffix = flavor.customApplicationIdSuffix
+        }
+        if (flavor.hasProperty('customVersionNameSuffix') && isApplicationProject()) {
+            flavor.versionNameSuffix = flavor.customVersionNameSuffix
+        }
+    }
+}
+
+def isApplicationProject() {
+    return project.android.class.simpleName.startsWith('BaseAppModuleExtension')
+}

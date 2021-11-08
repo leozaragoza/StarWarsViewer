@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/menuFragment">
+
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.starwars.starwarsviewer.ui.menu.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_planetsFragment"
+            app:destination="@id/planetsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/planetsFragment"
+        android:name="com.starwars.starwarsviewer.ui.planet.PlanetsFragment"
+        android:label="@string/planet_destination"
+        tools:layout="@layout/fragment_planets" >
+        <action
+            android:id="@+id/action_planetsFragment_to_planetDetailFragment"
+            app:destination="@id/planetDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/planetDetailFragment"
+        android:name="com.starwars.starwarsviewer.ui.planet.PlanetDetailFragment"
+        android:label="PlanetDetailFragment" >
+    </fragment>
+</navigation>
