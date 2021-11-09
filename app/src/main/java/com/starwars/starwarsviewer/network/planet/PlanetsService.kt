@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface PlanetsService {
+interface PlanetsService : Repo {
     @GET("/api/planets/{id}")
     suspend fun fetchPlanet(@Path("id") id: Int): Planet
 

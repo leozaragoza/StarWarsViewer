@@ -14,6 +14,7 @@ import com.starwars.starwarsviewer.domain.planet.model.Planet
 import com.starwars.starwarsviewer.ui.common.BaseFragment
 import com.starwars.starwarsviewer.ui.viewmodel.planet.PlanetDetailViewModel
 import com.starwars.starwarsviewer.util.Constants.Companion.PLANET_ID_BUNDLE_KEY
+import com.starwars.starwarsviewer.util.extensions.show
 import javax.inject.Inject
 
 class PlanetDetailFragment : BaseFragment() {
@@ -46,6 +47,7 @@ class PlanetDetailFragment : BaseFragment() {
     }
 
     private fun getPlanetData() {
+        showDetails(false)
         arguments?.getInt(PLANET_ID_BUNDLE_KEY)?.let {
             planetDetailViewModel.getPlanet(it).observe(viewLifecycleOwner, { planet ->
                 populatePlanetData(planet)
@@ -62,5 +64,11 @@ class PlanetDetailFragment : BaseFragment() {
 
         val dummyImage = resources.getString(R.string.sample_planet_image)
         picasso.load(dummyImage).into(binding.detailIv)
+        showDetails(true)
+    }
+
+    private fun showDetails(show: Boolean) {
+        binding.progressBar.show(!show)
+        binding.detailsSv.show(show)
     }
 }
