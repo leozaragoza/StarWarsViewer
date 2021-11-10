@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,6 +17,7 @@ import com.starwars.starwarsviewer.ui.adapter.PlanetAdapter
 import com.starwars.starwarsviewer.ui.common.BaseFragment
 import com.starwars.starwarsviewer.ui.viewmodel.planet.PlanetListViewModel
 import com.starwars.starwarsviewer.util.Constants.Companion.PLANET_ID_BUNDLE_KEY
+import com.starwars.starwarsviewer.util.extensions.show
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -54,18 +54,19 @@ class PlanetsFragment : BaseFragment() {
         val pagingAdapter = PlanetAdapter(PlanetAdapter.PlanetComparator) {
             navigateToPlanetDetail(it)
         }
-        val planetsRecyclerView = binding.planetsRv
-        planetsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        planetsRecyclerView.adapter = pagingAdapter
+
+        with(binding.planetsRv) {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = pagingAdapter
+        }
+
         lifecycleScope.launch {
             planetListViewModel.pagedFlow.collectLatest { pagingData ->
                 pagingAdapter.submitData(pagingData)
             }
-        }
 
-        lifecycleScope.launch {
             pagingAdapter.loadStateFlow.collectLatest { loadStates ->
-                binding.progressBar.isVisible = loadStates.refresh is LoadState.Loading
+                binding.progressBar.show(loadStates.refresh is LoadState.Loading)
                 //TODO: handle errors and retry
                 //retry.isVisible = loadState.refresh !is LoadState.Loading
                 //errorMsg.isVisible = loadState.refresh is LoadState.Error

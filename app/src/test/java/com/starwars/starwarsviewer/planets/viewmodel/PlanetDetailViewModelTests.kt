@@ -1,6 +1,7 @@
 package com.starwars.starwarsviewer.planets.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.starwars.starwarsviewer.domain.planet.model.Planet
 import com.starwars.starwarsviewer.domain.planet.usecase.GetPlanetDetailUseCase
@@ -54,6 +55,7 @@ class PlanetDetailViewModelTests {
             Mockito.`when`(getPlanetDetailUseCase.getPlanetDetail(1)).thenReturn(planet)
             Mockito.`when`(getPlanetDetailUseCase.getPlanetDetail(2)).thenReturn(planet2)
             val result = planetDetailViewModel.getPlanet(1).value
+            planetDetailViewModel.cleanData()
             val result2 = planetDetailViewModel.getPlanet(2).value
             Mockito.verify(getPlanetDetailUseCase).getPlanetDetail(1)
             Mockito.verify(getPlanetDetailUseCase).getPlanetDetail(2)

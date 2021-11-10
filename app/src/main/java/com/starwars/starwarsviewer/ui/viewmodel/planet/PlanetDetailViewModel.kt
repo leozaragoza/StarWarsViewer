@@ -11,12 +11,18 @@ import javax.inject.Inject
 
 class PlanetDetailViewModel @Inject constructor(private val getPlanetDetailUseCase: GetPlanetDetailUseCase): ViewModel() {
 
-    val planet = MutableLiveData<Planet>()
+    val planet = MutableLiveData<Planet?>(null)
 
-    fun getPlanet(id: Int): LiveData<Planet> {
-        viewModelScope.launch {
-            planet.postValue(getPlanetDetailUseCase.getPlanetDetail(id))
+    fun getPlanet(id: Int): LiveData<Planet?> {
+        if (planet.value == null) {
+            viewModelScope.launch {
+                planet.postValue(getPlanetDetailUseCase.getPlanetDetail(id))
+            }
         }
         return planet
+    }
+
+    fun cleanData() {
+        planet.postValue(null)
     }
 }

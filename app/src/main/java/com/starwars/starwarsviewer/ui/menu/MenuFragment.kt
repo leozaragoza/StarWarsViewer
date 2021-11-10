@@ -31,7 +31,9 @@ class MenuFragment : Fragment() {
     //TODO: implement a presenter
     private fun setupListeners() {
         notImplementedFeatureToast = Toast.makeText(requireContext(), R.string.feature_not_implemented_yet, Toast.LENGTH_SHORT)
-        binding.planetsBtn.setOnClickListener { findNavController().navigate(R.id.action_menuFragment_to_planetsFragment) }
-        binding.peopleBtn.setOnClickListener { notImplementedFeatureToast.show() }
+        with(binding) {
+            planetsBtn.setOnClickListener { findNavController().navigate(R.id.action_menuFragment_to_planetsFragment) }
+            peopleBtn.setOnClickListener { notImplementedFeatureToast.show() }
+        }
     }
 }

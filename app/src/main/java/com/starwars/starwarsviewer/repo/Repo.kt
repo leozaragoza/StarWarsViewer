@@ -1,7 +1,6 @@
-package com.starwars.starwarsviewer.network.planet
+package com.starwars.starwarsviewer.repo
 
-interface Repo {
-}
+interface Repo
 
 sealed class Result<out R> {
     data class Success<out T>(val data: T) : Result<T>()

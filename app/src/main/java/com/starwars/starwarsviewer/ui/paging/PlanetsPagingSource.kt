@@ -9,6 +9,7 @@ import java.io.IOException
 
 class PlanetsPagingSource(private val getPlanetPageUseCase: GetPlanetPageUseCase) :
     PagingSource<Int, Planet>() {
+
     override fun getRefreshKey(state: PagingState<Int, Planet>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)

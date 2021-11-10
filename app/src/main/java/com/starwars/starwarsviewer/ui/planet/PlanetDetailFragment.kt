@@ -50,17 +50,19 @@ class PlanetDetailFragment : BaseFragment() {
         showDetails(false)
         arguments?.getInt(PLANET_ID_BUNDLE_KEY)?.let {
             planetDetailViewModel.getPlanet(it).observe(viewLifecycleOwner, { planet ->
-                populatePlanetData(planet)
+                planet?.let { populatePlanetData(planet) }
             })
         }
     }
 
     private fun populatePlanetData(planet: Planet) {
-        binding.nameValueTv.text = planet.name
-        binding.climateValueTv.text = planet.climate
-        binding.populationValueTv.text = planet.population
-        binding.rotationPeriodValueTv.text = planet.rotationPeriod
-        binding.terrainValueTv.text = planet.terrain
+        with(binding) {
+            nameValueTv.text = planet.name
+            climateValueTv.text = planet.climate
+            populationValueTv.text = planet.population
+            rotationPeriodValueTv.text = planet.rotationPeriod
+            terrainValueTv.text = planet.terrain
+        }
 
         val dummyImage = resources.getString(R.string.sample_planet_image)
         picasso.load(dummyImage).into(binding.detailIv)
@@ -68,7 +70,9 @@ class PlanetDetailFragment : BaseFragment() {
     }
 
     private fun showDetails(show: Boolean) {
-        binding.progressBar.show(!show)
-        binding.detailsSv.show(show)
+        with(binding) {
+            progressBar.show(!show)
+            detailsSv.show(show)
+        }
     }
 }
