@@ -64,7 +64,9 @@ class PlanetsFragment : BaseFragment() {
             planetListViewModel.pagedFlow.collectLatest { pagingData ->
                 pagingAdapter.submitData(pagingData)
             }
+        }
 
+        lifecycleScope.launch {
             pagingAdapter.loadStateFlow.collectLatest { loadStates ->
                 binding.progressBar.show(loadStates.refresh is LoadState.Loading)
                 //TODO: handle errors and retry
